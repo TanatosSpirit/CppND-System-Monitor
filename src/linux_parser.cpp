@@ -88,8 +88,18 @@ float LinuxParser::MemoryUtilization() {
   return mem_util;
 }
 
-// TODO: Read and return the system uptime
-long LinuxParser::UpTime() { return 0; }
+long LinuxParser::UpTime() {
+  string line;
+  string key;
+  string value;
+  std::ifstream filestream(kProcDirectory + kUptimeFilename);
+  long output{};
+  if (filestream.is_open()) {
+    std::getline(filestream, line);
+    output = static_cast<long>(stof(line));
+    }
+  return output;
+}
 
 // TODO: Read and return the number of jiffies for the system
 long LinuxParser::Jiffies() { return 0; }
@@ -140,7 +150,8 @@ int LinuxParser::RunningProcesses() {
       }
     }
   }
-  return output;}
+  return output;
+}
 
 // TODO: Read and return the command associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
