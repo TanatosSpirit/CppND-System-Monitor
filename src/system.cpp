@@ -21,15 +21,16 @@ System::System() {
   kernel_ = LinuxParser::Kernel();
 }
 
-// TODO: Return the system's CPU
-Processor& System::Cpu() { return cpu_; }
+Processor& System::Cpu() {
+  cpu_.UpdateCPUUtil(LinuxParser::CpuUtilization());
+  return cpu_;
+}
 
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() { return processes_; }
 
 std::string System::Kernel() { return kernel_; }
 
-// TODO: Return the system's memory utilization
 float System::MemoryUtilization() { return LinuxParser::MemoryUtilization(); }
 
 std::string System::OperatingSystem() { return os_; }
