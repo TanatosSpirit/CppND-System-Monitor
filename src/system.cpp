@@ -33,8 +33,8 @@ vector<Process>& System::Processes() {
   out.reserve(pids.size());
   for(int const &pid:pids){
     Process tmp(pid);
-    std::string uid = LinuxParser::Uid(pid);
-    tmp.setUser(uid);
+    std::string name = LinuxParser::User(LinuxParser::Uid(pid));
+    tmp.setUser(name);
     out.emplace_back(tmp);
   }
   processes_ = out;
