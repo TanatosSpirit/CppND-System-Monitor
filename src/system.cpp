@@ -27,7 +27,20 @@ Processor& System::Cpu() {
 }
 
 // TODO: Return a container composed of the system's processes
-vector<Process>& System::Processes() { return processes_; }
+vector<Process>& System::Processes() {
+  vector<int> pids = LinuxParser::Pids();
+  vector<Process> out{};
+  out.reserve(pids.size());
+  for(int const &pid:pids){
+    Process tmp(pid);
+    std::string uid = LinuxParser::Uid(pid);
+    tmp.setUser(uid);
+    out.emplace_back(tmp);
+  }
+  processes_ = out;
+  return processes_;
+//  return out;
+}
 
 std::string System::Kernel() { return kernel_; }
 
