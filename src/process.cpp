@@ -16,15 +16,14 @@ int Process::Pid() { return pid_; }
 // TODO: Return this process's CPU utilization
 float Process::CpuUtilization() { return 0; }
 
-// TODO: Return the command that generated this process
 string Process::Command() { return command_; }
 
 void Process::setCommand(std::string command) {command_ = command;}
 
-// TODO: Return this process's memory utilization
-string Process::Ram() { return string(); }
+string Process::Ram() { return ram_; }
 
-// TODO: Return the user (name) that generated this process
+void Process::setRAMUsage(string ram) {ram_ = ram;}
+
 string Process::User() { return name_; }
 
 void Process::setUser(std::string name) {name_ = std::move(name);}

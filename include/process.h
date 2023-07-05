@@ -18,12 +18,14 @@ class Process {
   bool operator<(Process const& a) const;  // TODO: See src/process.cpp
   void setUser(std::string name);
   void setCommand(std::string command);
+  void setRAMUsage(std::string ram);
 
   // TODO: Declare any necessary private members
  private:
   int pid_;
   std::string name_;
   std::string command_;
+  std::string ram_;
 };
 
 #endif

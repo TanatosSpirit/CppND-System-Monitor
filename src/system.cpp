@@ -36,11 +36,11 @@ vector<Process>& System::Processes() {
     std::string name = LinuxParser::User(LinuxParser::Uid(pid));
     tmp.setUser(name);
     tmp.setCommand(LinuxParser::Command(pid));
+    tmp.setRAMUsage(LinuxParser::Ram(pid));
     out.emplace_back(tmp);
   }
   processes_ = out;
   return processes_;
-//  return out;
 }
 
 std::string System::Kernel() { return kernel_; }
