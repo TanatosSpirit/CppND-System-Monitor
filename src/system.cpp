@@ -35,6 +35,7 @@ vector<Process>& System::Processes() {
     Process tmp(pid);
     std::string name = LinuxParser::User(LinuxParser::Uid(pid));
     tmp.setUser(name);
+    tmp.setCommand(LinuxParser::Command(pid));
     out.emplace_back(tmp);
   }
   processes_ = out;
