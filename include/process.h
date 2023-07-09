@@ -19,6 +19,7 @@ class Process {
   void setUser(std::string name);
   void setCommand(std::string command);
   void setRAMUsage(std::string ram);
+  void setUpTime(long int uptime);
 
   // TODO: Declare any necessary private members
  private:
@@ -26,6 +27,7 @@ class Process {
   std::string name_;
   std::string command_;
   std::string ram_;
+  long int uptime_;
 };
 
 #endif

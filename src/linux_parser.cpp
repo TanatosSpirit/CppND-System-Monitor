@@ -11,7 +11,7 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-// DONE: An example of how to read data from the filesystem
+
 string LinuxParser::OperatingSystem() {
   string line;
   string key;
@@ -34,7 +34,7 @@ string LinuxParser::OperatingSystem() {
   return value;
 }
 
-// DONE: An example of how to read data from the filesystem
+
 string LinuxParser::Kernel() {
   string os, kernel, version;
   string line;
@@ -219,6 +219,32 @@ string LinuxParser::User(string pid) {
   return string();
 }
 
-// TODO: Read and return the uptime of a process
-// REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::UpTime(int pid[[maybe_unused]]) { return 0; }
+
+long LinuxParser::UpTime(int pid) {
+  string line, value;
+  vector<string> values;
+  std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatFilename);
+  if (stream.is_open()) {
+    std::getline(stream, line);
+    size_t index_start{}, index_end{};
+    for(size_t i = 0; i < line.size(); i++){
+        if(line.at(i) == '(')
+          index_start = i;
+        if(line.at(i) == ')') {
+          index_end = i;
+          break;
+        }
+    }
+    line.erase(index_start, index_end);
+    std::istringstream linestream(line);
+    for (int i = 0; i < 21; i++) {
+        linestream >> value;
+        values.push_back(value);
+    }
+  }
+  auto x = values.back();
+  long uptime = stol(x);
+  long i = uptime / sysconf(_SC_CLK_TCK);
+
+  return i;
+}

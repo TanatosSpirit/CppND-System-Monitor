@@ -28,8 +28,9 @@ string Process::User() { return name_; }
 
 void Process::setUser(std::string name) {name_ = std::move(name);}
 
-// TODO: Return the age of this process (in seconds)
-long int Process::UpTime() { return 0; }
+long int Process::UpTime() { return uptime_; }
+
+void Process::setUpTime(long int uptime) { uptime_ = uptime; }
 
 // TODO: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
