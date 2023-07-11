@@ -22,7 +22,7 @@ System::System() {
 }
 
 Processor& System::Cpu() {
-  cpu_.UpdateCPUUtil(LinuxParser::CpuUtilization());
+  cpu_.UpdateCPUUtil();
   return cpu_;
 }
 
