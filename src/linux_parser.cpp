@@ -47,7 +47,7 @@ string LinuxParser::Kernel() {
   return kernel;
 }
 
-// BONUS: Update this to use std::filesystem
+// TODO: BONUS: Update this to use std::filesystem
 vector<int> LinuxParser::Pids() {
   vector<int> pids;
   DIR* directory = opendir(kProcDirectory.c_str());
@@ -106,9 +106,16 @@ long LinuxParser::Jiffies() {
   return LinuxParser::ActiveJiffies() + LinuxParser::IdleJiffies();
 }
 
-// TODO: Read and return the number of active jiffies for a PID
-// REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
+// Read and return the number of active jiffies for a PID
+long LinuxParser::ActiveJiffies(int pid) {
+  vector<string> values;
+  getProcessStat(pid, values);
+
+  long total = stol(values.at(13)) + stol(values.at(14)) +
+               stol(values.at(15)) + stol(values.at(16));
+
+  return total / sysconf(_SC_CLK_TCK);
+}
 
 // Read and return the number of active jiffies for the system
 long LinuxParser::ActiveJiffies() {

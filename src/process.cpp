@@ -16,15 +16,16 @@ Process::Process(int pid) {
   name_ = LinuxParser::User(LinuxParser::Uid(pid));
   ram_ = LinuxParser::Ram(pid);
   uptime_ = LinuxParser::UpTime(pid);
+  // TODO calc current cpu util
+  cpuutil_ = static_cast<float>(LinuxParser::ActiveJiffies(pid))/
+             static_cast<float>(uptime_);
 }
 
-int Process::Pid() { return pid_; }
+int Process::Pid() const { return pid_; }
 
-// TODO: Return this process's CPU utilization
-float Process::CpuUtilization() {
-  //    vector<string> values;
-  //    LinuxParser::getProcessStat(pid,values);
-  return 0;
+// Return this process's CPU utilization
+float Process::CpuUtilization() const {
+  return cpuutil_;
 }
 
 string Process::Command() { return command_; }
@@ -33,7 +34,7 @@ string Process::Ram() { return ram_; }
 
 string Process::User() { return name_; }
 
-long int Process::UpTime() { return uptime_; }
+long int Process::UpTime() const { return uptime_; }
 
 // TODO: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
