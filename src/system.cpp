@@ -34,6 +34,7 @@ vector<Process>& System::Processes() {
   for(int const &pid:pids){
     out.emplace_back(pid);
   }
+  sort(out.rbegin(), out.rend());
   processes_ = out;
   return processes_;
 }
