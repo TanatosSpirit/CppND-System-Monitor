@@ -52,6 +52,7 @@ std::string Ram(int pid);
 std::string Uid(int pid);
 std::string User(std::string pid);
 long int UpTime(int pid);
+void getProcessStat(int const pid, std::vector<std::string> &output);
 };  // namespace LinuxParser
 
 #endif

@@ -37,6 +37,8 @@ vector<Process>& System::Processes() {
     tmp.setCommand(LinuxParser::Command(pid));
     tmp.setRAMUsage(LinuxParser::Ram(pid));
     tmp.setUpTime(LinuxParser::UpTime(pid));
+    vector<string> values;
+    LinuxParser::getProcessStat(pid,values);
     out.emplace_back(tmp);
   }
   processes_ = out;
