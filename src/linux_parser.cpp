@@ -226,9 +226,9 @@ long LinuxParser::UpTime(int pid) {
 
   auto x = values.back();
   long uptime = stol(x);
-  long i = uptime / sysconf(_SC_CLK_TCK);
+  uptime = uptime / sysconf(_SC_CLK_TCK);
 
-  return LinuxParser::UpTime() - i;
+  return LinuxParser::UpTime() - uptime;
 }
 
 void LinuxParser::getProcessStat(int const pid, std::vector<std::string> &output){

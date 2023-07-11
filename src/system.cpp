@@ -32,14 +32,7 @@ vector<Process>& System::Processes() {
   vector<Process> out{};
   out.reserve(pids.size());
   for(int const &pid:pids){
-    Process tmp(pid);
-    tmp.setUser(LinuxParser::User(LinuxParser::Uid(pid)));
-    tmp.setCommand(LinuxParser::Command(pid));
-    tmp.setRAMUsage(LinuxParser::Ram(pid));
-    tmp.setUpTime(LinuxParser::UpTime(pid));
-    vector<string> values;
-    LinuxParser::getProcessStat(pid,values);
-    out.emplace_back(tmp);
+    out.emplace_back(pid);
   }
   processes_ = out;
   return processes_;
