@@ -21,17 +21,22 @@ Process::Process(int pid) {
              static_cast<float>(uptime_);
 }
 
+// Return this process's ID
 int Process::Pid() const { return pid_; }
 
 // Return this process's CPU utilization
 float Process::CpuUtilization() const { return cpuutil_; }
 
+// Return the command that generated this process
 string Process::Command() { return command_; }
 
+// Return this process's memory utilization
 string Process::Ram() const { return ram_; }
 
+// Return the user (name) that generated this process
 string Process::User() { return name_; }
 
+// Return the age of this process (in seconds)
 long int Process::UpTime() const { return uptime_; }
 
 // Overload the "less than" comparison operator for Process objects

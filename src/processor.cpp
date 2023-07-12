@@ -1,5 +1,6 @@
 #include "processor.h"
 
+// Return the aggregate CPU utilization
 float Processor::Utilization() const { return CPUUtil_; }
 
 void Processor::UpdateCPUUtil(){
