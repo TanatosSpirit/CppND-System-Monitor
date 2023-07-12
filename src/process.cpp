@@ -24,13 +24,11 @@ Process::Process(int pid) {
 int Process::Pid() const { return pid_; }
 
 // Return this process's CPU utilization
-float Process::CpuUtilization() const {
-  return cpuutil_;
-}
+float Process::CpuUtilization() const { return cpuutil_; }
 
 string Process::Command() { return command_; }
 
-string Process::Ram() { return ram_; }
+string Process::Ram() const { return ram_; }
 
 string Process::User() { return name_; }
 
@@ -38,5 +36,8 @@ long int Process::UpTime() const { return uptime_; }
 
 // Overload the "less than" comparison operator for Process objects
 bool Process::operator<(Process const& a) const {
-  return CpuUtilization() < a.CpuUtilization();
+//  return CpuUtilization() < a.CpuUtilization();
+  long first = stol(Ram());
+  long second = stol(a.Ram());
+  return  first < second;
 }

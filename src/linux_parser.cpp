@@ -209,11 +209,11 @@ string LinuxParser::Ram(int pid) {
       std::istringstream linestream(line);
       linestream >> key >> value;
       if (key == "VmSize:") {
-        return to_string(stoi(value)/1024);
+        return to_string(stoi(value)/1000);
       }
     }
   }
-  return string();
+  return "0";
 }
 
 string LinuxParser::Uid(int pid) {
