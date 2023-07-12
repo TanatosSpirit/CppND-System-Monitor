@@ -90,13 +90,14 @@ float LinuxParser::MemoryUtilization() {
 
 long LinuxParser::UpTime() {
   string line;
-  string key;
   string value;
   std::ifstream filestream(kProcDirectory + kUptimeFilename);
   long output{};
   if (filestream.is_open()) {
     std::getline(filestream, line);
-    output = static_cast<long>(stof(line));
+    std::istringstream linestream(line);
+    linestream >> value;
+    output = stol(value);
     }
   return output;
 }
@@ -110,11 +111,16 @@ long LinuxParser::Jiffies() {
 long LinuxParser::ActiveJiffies(int pid) {
   vector<string> values;
   getProcessStat(pid, values);
+  long out{};
 
-  long total = stol(values.at(13)) + stol(values.at(14)) +
-               stol(values.at(15)) + stol(values.at(16));
+  if(!values.empty()){
+    long total = stol(values.at(13)) + stol(values.at(14)) +
+                 stol(values.at(15)) + stol(values.at(16));
 
-  return total / sysconf(_SC_CLK_TCK);
+    out =  total / sysconf(_SC_CLK_TCK);
+  }
+
+  return out;
 }
 
 // Read and return the number of active jiffies for the system
@@ -245,12 +251,13 @@ string LinuxParser::User(string pid) {
 long LinuxParser::UpTime(int pid) {
   vector<string> values;
   getProcessStat(pid, values);
-
-  auto x = values.back();
-  long uptime = stol(x);
-  uptime = uptime / sysconf(_SC_CLK_TCK);
-
-  return LinuxParser::UpTime() - uptime;
+  long out{};
+  if(!values.empty()){
+    long uptime = stol(values.back());
+    uptime = uptime / sysconf(_SC_CLK_TCK);
+    out = LinuxParser::UpTime() - uptime;
+  }
+  return out;
 }
 
 void LinuxParser::getProcessStat(int const pid, std::vector<std::string> &output){
@@ -267,7 +274,7 @@ void LinuxParser::getProcessStat(int const pid, std::vector<std::string> &output
           break;
         }
     }
-    line.erase(index_start, index_end);
+    line.erase(index_start, index_end - index_start + 1);
     std::istringstream linestream(line);
     for (int i = 0; i < 21; i++) {
         linestream >> value;
