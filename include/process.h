@@ -26,6 +26,8 @@ class Process {
   std::string ram_;
   long int uptime_;
   float cpuutil_;
+  float prev_active_{};
+  float prev_total_{};
 };
 
 #endif
