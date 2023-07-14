@@ -1,6 +1,6 @@
-#include <string>
-
 #include "format.h"
+
+#include <string>
 
 using std::string;
 
@@ -8,11 +8,11 @@ using std::string;
 // OUTPUT: HH:MM:SS
 string Format::ElapsedTime(long seconds) {
   string time{};
-  long hh = seconds/(60*60);
+  long hh = seconds / (60 * 60);
   time += (hh < 10 ? "0" + std::to_string(hh) : std::to_string(hh)) + ":";
-  long mm = (seconds/60)%60;
+  long mm = (seconds / 60) % 60;
   time += (mm < 10 ? "0" + std::to_string(mm) : std::to_string(mm)) + ":";
-  long ss = seconds%60;
+  long ss = seconds % 60;
   time += ss < 10 ? "0" + std::to_string(ss) : std::to_string(ss);
   return time;
 }

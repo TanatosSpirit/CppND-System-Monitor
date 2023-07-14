@@ -1,10 +1,11 @@
+#include "process.h"
+
 #include <unistd.h>
+
 #include <cctype>
 #include <sstream>
 #include <string>
 #include <vector>
-
-#include "process.h"
 
 using std::string;
 using std::to_string;
@@ -19,7 +20,7 @@ Process::Process(int pid) {
   auto current_active = static_cast<float>(LinuxParser::ActiveJiffies(pid));
   auto current_total = static_cast<float>(uptime_);
 
-  cpuutil_ = (current_active - prev_active_)/(current_total - prev_total_);
+  cpuutil_ = (current_active - prev_active_) / (current_total - prev_total_);
 
   prev_active_ = current_active;
   prev_total_ = current_total;
@@ -46,7 +47,7 @@ long int Process::UpTime() const { return uptime_; }
 // Overload the "less than" comparison operator for Process objects
 bool Process::operator<(Process const& a) const {
   return CpuUtilization() < a.CpuUtilization();
-//  long first = stol(Ram());
-//  long second = stol(a.Ram());
-//  return  first < second;
+  //  long first = stol(Ram());
+  //  long second = stol(a.Ram());
+  //  return  first < second;
 }
